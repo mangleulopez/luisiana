@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galería de Imágenes</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #2f8f3d, #6dbb63, #4c3e3f);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Asegura que el contenido ocupe al menos toda la altura de la ventana */
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #fff;
+        text-align: center;
+        font-weight: 600;
+      }
+      .gallery-container {
+        width: 90%;
+        max-width: 1200px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 50px;
+        flex-grow: 1; /* Permite que la galería crezca para ocupar el espacio disponible */
+      }
+      .image-card {
+        width: 300px;
+        height: 200px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        position: relative;
+      }
+      .image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      .image-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      }
+      .image-card .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Superposición oscura */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .image-card:hover .overlay {
+        opacity: 1;
+      }
+      .overlay-text {
+        font-size: 1.5rem;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      }
+      /* Animación para hacer girar el logo */
+      @keyframes rotateLogo {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      #logo {
+        width: 80px;
+        height: auto;
+        animation: rotateLogo 5s linear infinite; /* Se aplica la animación */
+        display: block;
+        margin: 0 auto; /* Centra el logo */
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 0.3s ease;
+      }
+      .modal.open {
+        display: flex;
+        opacity: 1;
+      }
+      .modal-content {
+        position: relative;
+        width: 80%;
+        max-width: 900px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .modal-content img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 2rem;
+        color: #333;
+        background-color: white;
+        border: 2px solid #ddd;
+        padding: 5px 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .close-modal:hover {
+        background-color: #ff3b30;
+        color: white;
+      }
+
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+        margin-top: auto; /* Asegura que el footer se posicione abajo */
+      }
+
+      footer a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Luisiana</h1>
+      <div class="gallery-container">
+        <div
+          class="image-card"
+          onclick="openModal('https://aorbezo98.github.io/micrositio/images/image1.jfif')"
+        >
+          <img
+            src="https://aorbezo98.github.io/micrositio/images/image1.jfif"
+            alt="Imagen 1"
+          />
+          <div class="overlay">
+            <div class="overlay-text">Imagen 1</div>
+          </div>
+        </div>
+        <div
+          class="image-card"
+          onclick="openModal('https://aorbezo98.github.io/micrositio/images/image2.png')"
+        >
+          <img
+            src="https://aorbezo98.github.io/micrositio/images/image2.png"
+            alt="Imagen 2"
+          />
+          <div class="overlay">
+            <div class="overlay-text">Imagen 2</div>
+          </div>
+        </div>
+        <div
+          class="image-card"
+          onclick="openModal('https://aorbezo98.github.io/micrositio/images/image3.jfif')"
+        >
+          <img
+            src="https://aorbezo98.github.io/micrositio/images/image3.jfif"
+            alt="Imagen 3"
+          />
+          <div class="overlay">
+            <div class="overlay-text">Imagen 3</div>
+          </div>
+        </div>
+        <div
+          class="image-card"
+          onclick="openModal('https://aorbezo98.github.io/micrositio/images/image4.jfif')"
+        >
+          <img
+            src="https://aorbezo98.github.io/micrositio/images/image4.jfif"
+            alt="Imagen 4"
+          />
+          <div class="overlay">
+            <div class="overlay-text">Imagen 4</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>2024 Luisiana</p>
+      <p>Sevilla la Nueva, Madrid</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()">×</button>
+        <img id="modal-image" src="" alt="Imagen seleccionada" />
+      </div>
+    </div>
+
+    <script>
+      function openModal(imageSrc) {
+        const modal = document.getElementById("modal");
+        const modalImage = document.getElementById("modal-image");
+        modalImage.src = imageSrc;
+        modal.classList.add("open");
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.classList.remove("open");
+      }
+    </script>
+  </body>
+</html>
